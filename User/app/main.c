@@ -1439,7 +1439,7 @@ void iris_open_set_relatively(u8 mstep)
 	for(i=0;i<data;i++)
 	{	
 		LenDrvZoomMove(IRIS_OPEN_DIR,AN41908_STEPS_ONE_TIME);
-	    delay_X1ms(80);
+	    delay_X1ms(20);
 	}
 
 	
@@ -1464,7 +1464,7 @@ void iris_close_set_relatively(u8 mstep)
 	for(i=0;i<data;i++)
 	{
 		LenDrvZoomMove(IRIS_CLOSE_DIR,AN41908_STEPS_ONE_TIME);
-    	delay_X1ms(80);
+    	delay_X1ms(20);
 	}
 	
 	iris_step_cnt -= data;
@@ -1544,7 +1544,7 @@ void iris_manual_by_shutter_handle(u8 mode)
 			if(speedtmp == 0)
 				speedtmp = 1;
 			
-			switch(speedtmp>4)
+			switch(speedtmp)
 				{
 			case 5:
 				speedtmp = speedtmp*2;

@@ -667,7 +667,18 @@ void dome_func_control(uchar action,uchar prePoint)
 			shutter_threshold_set();
 		}
 		break;
-	
+	case 126:
+		if(action == 0x11) // iris manual, shutter auto
+		{
+			lens_exposure_mode=2; //0,auto;1,shutter prior;2,iris prior
+			iris_auto_manual_state = 1;
+			
+			my_proto_call_preset(128,0,domeNo);
+			
+			/*下面设置快门的模式为自动，并返回当前的光圈值			*/
+		}	
+
+		break;
 	case 128:
 		if(action == 0x11) // iris manual, shutter auto
 		{
