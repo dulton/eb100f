@@ -542,9 +542,13 @@ static void PELCO_D_P_protocol_analysis_2(void)
 				   	{
 					case 0x01: command_byte=0x04;        //NEAR
 						break;			
-					case 0x02: command_byte=0x0e;          //OPEN
+					case 0x02: 
+						command_byte=0x0e;          //OPEN
+						Rocket_fir_data = keyboard_data_buffer[3];
 						break;
-					case 0x04: command_byte=0x0f;         //CLOSE
+					case 0x04: 
+						command_byte=0x0f;         //CLOSE
+						Rocket_fir_data = keyboard_data_buffer[3];
 						break;
 					case 0x00:
 						command_byte=0x05;         //stop

@@ -1520,6 +1520,9 @@ void iris_manual_by_shutter_handle(u8 mode)
 
 	u16 agc_v1;
 	static u16 agc_v1_pre = 0;
+
+	u8 speedtmp = 0;
+
 	
 	if(iris_auto_manual_state)
 	{
@@ -1533,17 +1536,43 @@ void iris_manual_by_shutter_handle(u8 mode)
 				tmp = val_pre -val;
 			
 
+			speedtmp = Rocket_fir_data;
+
+			if(speedtmp > 8)
+				speedtmp = 8;
+
+			if(speedtmp == 0)
+				speedtmp = 1;
+			
+			switch(speedtmp>4)
+				{
+			case 5:
+				speedtmp = speedtmp*2;
+				break;
+			case 6:
+				speedtmp = speedtmp*3;
+				break;
+			case 7:
+				speedtmp = speedtmp*4;
+				break;
+			case 8:
+				speedtmp = speedtmp*5;
+				break;
+			default:
+				break;
+			}
+
 			
 				//if((val_pre==0xffff) || (val != val_pre  && tmp > 100))
 				{
 					if(mode)
 					{
-						iris_open_set_relatively(1);
+						iris_open_set_relatively(speedtmp);
 					}
 					else
 					{
 
-						iris_close_set_relatively(1);
+						iris_close_set_relatively(speedtmp);
 					}
 
 				}			
