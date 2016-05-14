@@ -93,9 +93,9 @@ void cam_osd_control(uchar type)//1:call camera osd directly; 0:call camera osd 
 
             	camera_osd_key_emulate(OSD_RIGHT);
             }
-            else if (0x0E == command_byte || 0x0F == command_byte) //if iris open/close
+            else if (0x98 == command_byte || 0x99 == command_byte) //if iris open/close
 		    {
-                if (0x0E == command_byte)  //"iris close" will close the OSD of camera of CNB and GP
+                if (0x98 == command_byte)  //"iris close" will close the OSD of camera of CNB and GP
                 {
                     
                     {

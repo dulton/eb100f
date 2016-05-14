@@ -628,7 +628,7 @@ void dome_func_control(uchar action,uchar prePoint)
 		
 		if(action == 0x11)
         {
-        iris_ctl_mode = IRIS_CAM_OSD_ENTER;
+       // iris_ctl_mode = IRIS_CAM_OSD_ENTER;
         	osdSwitchFlag = 1;
         	//cam_osd_control(1);
 			camera_osd_switch(0);

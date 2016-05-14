@@ -422,6 +422,7 @@ u8 complex_cmd=0;
 
 
 
+extern void return_data_to_rs485(u8 data1,u8 data2,u8 data3);
 
 
 
@@ -543,12 +544,33 @@ static void PELCO_D_P_protocol_analysis_2(void)
 					case 0x01: command_byte=0x04;        //NEAR
 						break;			
 					case 0x02: 
-						command_byte=0x0e;          //OPEN
-						Rocket_fir_data = keyboard_data_buffer[4];
+
+						if(keyboard_data_buffer[5] == 0x80) // for open
+						{
+							command_byte=0x0e;			//OPEN
+							Rocket_fir_data = keyboard_data_buffer[4];
+
+						}
+						else
+						{// for menu enter key
+							command_byte=0x98;
+
+						}
 						break;
-					case 0x04: 
-						command_byte=0x0f;         //CLOSE
-						Rocket_fir_data = keyboard_data_buffer[4];
+					case 0x04:
+						
+						if(keyboard_data_buffer[5] == 0x80) // for open
+						{
+							command_byte=0x0f;			//OPEN
+							Rocket_fir_data = keyboard_data_buffer[4];
+
+						}
+						else
+						{// for menu enter key
+							command_byte=0x99;
+
+						}
+						
 						break;
 					case 0x00:
 						command_byte=0x05;         //stop
@@ -565,6 +587,9 @@ static void PELCO_D_P_protocol_analysis_2(void)
 
 					case 0x06:
 
+						break;
+					case 0x88:
+						return_data_to_rs485(system_para.system_para.para_ex_io_1_mode,system_para.system_para.para_iris_ex_mode,(u8)iris_step_cnt);				
 						break;
 
 					default:

@@ -32,6 +32,35 @@ void send_to_rs485_data(u8 addr)
 }
 
 
+void return_data_to_rs485(u8 data1,u8 data2,u8 data3)
+{
+
+	u8 parity_byte;
+
+	return_rs485_buff[0] = 0xff;
+	return_rs485_buff[1] = 0x01;
+	
+	parity_byte = return_rs485_buff[1];
+
+	return_rs485_buff[2] = data1;
+	return_rs485_buff[3] = 0x88;
+	return_rs485_buff[4] = data2;
+	return_rs485_buff[5] = data3;
+
+	
+	for(u8 i=1;i<6;i++)
+	{
+		
+		parity_byte += return_rs485_buff[i];
+	}
+	//parity_byte = return_rs485_buff[1] + return_rs485_buff[2] + return_rs485_buff[3] + return_rs485_buff[4] + return_rs485_buff[5];
+
+	return_rs485_buff[6]=parity_byte;
+	RS485_SendBytes(7,return_rs485_buff);
+ 	delayms(40);
+
+
+}
 
 static void send_buff_init(void)
 {

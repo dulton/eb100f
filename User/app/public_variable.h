@@ -32,6 +32,7 @@ extern u8 cam_recieve_cnt_public;
 extern u16	AN41908_STEPS_ONE_TIME;
 
 
+extern s16 iris_step_cnt;//靠近CLOSE边为0，到OPEN最大时为最大值35
 
 
 #ifndef	__UNION_SYS__
