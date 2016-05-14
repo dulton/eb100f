@@ -437,6 +437,8 @@ static void PELCO_D_P_protocol_analysis_2(void)
 	uchar Tilt_falg = 0;
 //	static uchar Rec_tour_data_flag;          // 为1时开始接收TOUR数,为2时数据已接收完毕
 
+	u8 tmp; 
+
 	Keyboard_data_com = 0x00;
 	parity_byte = 0xfe;                     //初始化parity_byte 与  Keyboard_data_com 不相等
 	command_byte=0xff;
@@ -542,6 +544,11 @@ static void PELCO_D_P_protocol_analysis_2(void)
 					switch(keyboard_data_buffer[2])
 				   	{
 					case 0x01: command_byte=0x04;        //NEAR
+
+					tmp = keyboard_data_buffer[4];
+							if(tmp > 8)
+								tmp = 8;
+							motor_lens_voltage_set(tmp);
 						break;			
 					case 0x02: 
 
@@ -648,11 +655,25 @@ static void PELCO_D_P_protocol_analysis_2(void)
                         
 						switch (keyboard_data_buffer[3])
 						{
-						case 0x20: command_byte = 0x01;     //放大
+						case 0x20: 
+							command_byte = 0x01;     //放大
+							tmp = keyboard_data_buffer[4];
+							if(tmp > 8)
+								tmp = 8;
+							motor_lens_voltage_set(tmp);
 						        break;
 						case 0x40: command_byte = 0x02;     //缩小
+						tmp = keyboard_data_buffer[4];
+							if(tmp > 8)
+								tmp = 8;
+							motor_lens_voltage_set(tmp);
 						        break;
 						case 0x80: command_byte = 0x03;        //FAR    for pec_D
+
+						tmp = keyboard_data_buffer[4];
+							if(tmp > 8)
+								tmp = 8;
+							motor_lens_voltage_set(tmp);
 						        break;
 						case 0x04: Rocket_fir_data = keyboard_data_buffer[4];
 						        command_byte = 0x06;         //pan left

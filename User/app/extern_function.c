@@ -692,7 +692,7 @@ void dome_func_control(uchar action,uchar prePoint)
 			/*下面设置快门的模式为手动，并返回当前的快门值			*/
 			//cam_shutter_mode_set(MANUAL_MODE);//auto,manual
 
-			my_proto_call_preset(127,0,domeNo);
+			//my_proto_call_preset(127,0,domeNo);
 
 		}
 		else
@@ -712,7 +712,7 @@ void dome_func_control(uchar action,uchar prePoint)
 			lens_exposure_mode=2; //0,auto;1,shutter prior;2,iris prior
 			iris_auto_manual_state = 1;
 			
-			my_proto_call_preset(128,0,domeNo);
+			//my_proto_call_preset(128,0,domeNo);
 			
 			/*下面设置快门的模式为自动，并返回当前的光圈值			*/
 		}	
@@ -728,7 +728,7 @@ void dome_func_control(uchar action,uchar prePoint)
 			
 			cam_shutter_mode_set(AUTO_MODE);//auto,manual
 
-			my_proto_call_preset(128,0,domeNo);
+			//my_proto_call_preset(128,0,domeNo);
 			
 			/*下面设置快门的模式为自动，并返回当前的光圈值			*/
 		}
