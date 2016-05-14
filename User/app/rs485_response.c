@@ -35,12 +35,11 @@ void send_to_rs485_data(u8 addr)
 void return_data_to_rs485(u8 data1,u8 data2,u8 data3)
 {
 
-	u8 parity_byte;
+	u8 parity_byte = 0;
 
 	return_rs485_buff[0] = 0xff;
 	return_rs485_buff[1] = 0x01;
 	
-	parity_byte = return_rs485_buff[1];
 
 	return_rs485_buff[2] = data1;
 	return_rs485_buff[3] = 0x88;

@@ -2010,47 +2010,18 @@ int main(void)
 
 		
 #if 0
-    ttlen = LensDrvSPIReadUint( 0x25 );
-    ttlen = LensDrvSPIReadUint( 0x20 );
 
-    while(0)
+    while(1)
     {
-		//an41908_brake_set(0);
-			if(cam_iris_value_data_get(&ttlen))
-			{
-			
-					k--;
+		return_data_to_rs485(system_para.system_para.para_ex_io_1_mode,(kb_motor_step<<4)|(iris_auto_manual_state&0x0f),(u8)iris_step_cnt); 			
 
-			}
-        delay_X1ms(800);
-			
-			if(cam_shutter_value_get(&ttlens))
-			{
-				k--;
-			}
-		
-			delay_X1ms(800);
-			
-			if(cam_agc_level_get(&ttlena))
-			{
-				k--;
-			}
 		
 			delay_X1ms(800);
 	
     }
 		
 		
-    while(1)
-    {
-        LenDrvZoomMove(1,160);
-//LensDrvFocusMove(1,100);
-        delay_X1ms(300);
-        LenDrvZoomMove(0,160);
-        //LensDrvFocusMove(0,100);
-        delay_X1ms(300);
-        //delay_X1ms(2000);
-    }
+
 #endif
 
 	while(1)
@@ -2065,6 +2036,9 @@ int main(void)
 		
 		if (command_analysis()) 
 		{
+		
+
+
 			if(command_byte != 0x0e && command_byte!=0x0f)
 			{
 				jiguang_zoom_state = 0;

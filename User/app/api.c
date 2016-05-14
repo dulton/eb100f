@@ -1182,14 +1182,14 @@ void APP_USART1_Baudrate(u32 baudrate)
 }
 
 
-#if 1
+#if 0
 void APP_USART1_IRQHandler(void)
 {
 	INT08U udr0Temp = 0;   
 
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)//判断是不是接收中断
 	{
-		if ((USART1->SR & USART_FLAG_RXNE) != (u16)RESET)
+		if(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == SET) 
 		{	           
 			udr0Temp = ((u16)(USART1->DR & (u16)0x01FF)) & 0xFF;
 			uart0_rx_isr(udr0Temp);
@@ -1201,29 +1201,22 @@ void APP_USART1_IRQHandler(void)
 void APP_USART1_IRQHandler(void)
 {
 	INT08U udr0Temp = 0;   
-	/* if there is data come from the USART1 */
-//    if(USART_GetFlagStatus(USART1,USART_IT_RXNE) == SET) 
-//	{	           
-//		udr0Temp = USART_ReceiveData(USART1) & 0xFF;
-//		uart0_rx_isr(udr0Temp);
-////		return;  					
-////    } else {
-////		return; 
-//	}
 
-//    if(USART_GetFlagStatus(USART1,USART_IT_RXNE) == SET)
-	 if ((USART1->SR & USART_IT_RXNE) != (u16)RESET)
-	{	           
-//		udr0Temp = USART_ReceiveData(USART1) & 0xFF;
-		udr0Temp = ((u16)(USART1->DR & (u16)0x01FF)) & 0xFF;
-		uart0_rx_isr(udr0Temp);
-//		return;  					
-//    } else {
-//		return; 
+
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)//?D??ê?2?ê??óê??D??
+	{
+		if ((USART1->SR & USART_FLAG_RXNE) != (u16)RESET)
+		{	
+			udr0Temp = ((u16)(USART1->DR & (u16)0x01FF)) & 0xFF;
+			uart0_rx_isr(udr0Temp);
+		}
 	}
-	
-		
+
+
+
+
 }
+
 #endif
 
 

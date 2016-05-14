@@ -588,14 +588,13 @@ static void PELCO_D_P_protocol_analysis_2(void)
 					case 0x06:
 
 						break;
-					case 0x88:
-						return_data_to_rs485(system_para.system_para.para_ex_io_1_mode,system_para.system_para.para_iris_ex_mode,(u8)iris_step_cnt);				
-						break;
 
 					default:
 						break;
 
 					}
+
+					
 				}
 				else
 				{
@@ -879,6 +878,11 @@ static void PELCO_D_P_protocol_analysis_2(void)
 
 						case 0x92: command_byte = 0x16;                          //已接收轮巡轨迹数据
 							break;
+
+						case 0x88:
+							return_data_to_rs485(system_para.system_para.para_ex_io_1_mode,(kb_motor_step<<4)|(iris_auto_manual_state&0x0f),(u8)iris_step_cnt); 			
+							break;
+
 
 						default:   if (0x00 != keyboard_data_buffer[3])
 						            command_byte = 0xff;

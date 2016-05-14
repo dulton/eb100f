@@ -271,6 +271,7 @@ void sys_expand_para_initial(void)
 		iris_ex_pin_set(0);
 
 	}
+
 	
 }
 
@@ -319,6 +320,25 @@ void load_system_para(void)
 
 
     }
+
+
+	switch(system_expand_para.system_para.para_stepsmotor_pulse_per_step)
+		{
+	case 0:
+		kb_motor_step = 0;
+		break;
+	case AN41908_MOTOR_STEPS_125_PRESET:
+		kb_motor_step = 1;
+		break;
+	case AN41908_MOTOR_STEPS_130_PRESET:
+		kb_motor_step = 2;
+		break;
+	default:
+		break;
+
+	}
+
+	
 }
 
 void load_system_para_by_mode(u8 mode)
@@ -478,16 +498,35 @@ void motor_lens_voltage_set(u8 mode)
 extern u8 iris_auto_manual_state;
 
 
+u8 kb_motor_step = 0; // 0,call 125; 1,set 125; 2 ,set 130
 
 void stepmotor_para_set(u16 val)
 {
 	system_expand_para.system_para.para_stepsmotor_pulse_per_step = val;
 
+	switch(val)
+		{
+	case 0:
+		kb_motor_step = 0;
+		break;
+	case AN41908_MOTOR_STEPS_125_PRESET:
+		kb_motor_step = 1;
+		break;
+	case AN41908_MOTOR_STEPS_130_PRESET:
+		kb_motor_step = 2;
+		break;
+	default:
+		break;
+
+	}
+
+	
 	save_sys_expand_para();
 	
 	iris_lens_pos_init();
 }
 
+u8 kb_iris_mode = 0;
 
 void dome_func_control(uchar action,uchar prePoint)
 {
@@ -651,7 +690,7 @@ void dome_func_control(uchar action,uchar prePoint)
 			iris_auto_manual_state = 0;
 
 			/*下面设置快门的模式为手动，并返回当前的快门值			*/
-			cam_shutter_mode_set(MANUAL_MODE);//auto,manual
+			//cam_shutter_mode_set(MANUAL_MODE);//auto,manual
 
 			my_proto_call_preset(127,0,domeNo);
 
@@ -664,7 +703,7 @@ void dome_func_control(uchar action,uchar prePoint)
 			/*下面设置快门的模式为自动，		*/
 
 			shutter_val_auto_iris_level = 2;
-			shutter_threshold_set();
+			//shutter_threshold_set();
 		}
 		break;
 	case 126:
@@ -779,6 +818,8 @@ void dome_func_control(uchar action,uchar prePoint)
 		{
 			iris_ex_pin_set(1);
 			stepmotor_para_set(0);
+			
+			
 		}
 		else
 		{

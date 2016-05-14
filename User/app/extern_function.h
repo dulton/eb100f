@@ -10,6 +10,7 @@ IRIS_CAM_OSD_ENTER
 };
 
 extern enum IRIS_CTL_MODE_TYPE iris_ctl_mode;
+extern u8 kb_motor_step;
 
 
 extern void dome_func_control(uchar action,uchar prePoint);
