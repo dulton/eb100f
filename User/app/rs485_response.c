@@ -56,7 +56,7 @@ void return_data_to_rs485(u8 data1,u8 data2,u8 data3)
 
 	return_rs485_buff[6]=parity_byte;
 	RS485_SendBytes(7,return_rs485_buff);
- 	delayms(40);
+ 	delayms(10);
 
 
 }

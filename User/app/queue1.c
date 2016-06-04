@@ -16,7 +16,7 @@
 
 
 #define	printf_s	printf
-#define	MAX_QUEUE_LIST	15
+#define	MAX_QUEUE_LIST	5//15
 
 #ifndef u8
 typedef unsigned char u8;

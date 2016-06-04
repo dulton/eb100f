@@ -823,6 +823,7 @@ void dome_func_control(uchar action,uchar prePoint)
 		}
 		else
 		{
+			iris_auto_manual_state = 0;
 			iris_ex_pin_set(0);
 
 			stepmotor_para_set(AN41908_MOTOR_STEPS_125_PRESET);
@@ -837,6 +838,7 @@ void dome_func_control(uchar action,uchar prePoint)
 		}
 		else
 		{
+			iris_auto_manual_state = 1;
 			stepmotor_para_set(AN41908_MOTOR_STEPS_130_PRESET);
 		}
 
