@@ -137,6 +137,21 @@ void zoom_pin_Init(void)
 
 }
 
+
+void FP_AD_pin_Init(void)
+{
+	GPIO_InitTypeDef GPIOD_InitStructure;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+	
+	GPIOD_InitStructure.GPIO_Pin = GPIO_Pin_1;
+    GPIOD_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIOD_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(FOCUS_PORT, &GPIOD_InitStructure);
+
+}
+
+
 u8 iii = 2;
 
 void focus_pin_Init(void)
@@ -530,7 +545,9 @@ void ports_initial(void)
 	SPI_FLASH_Init();
 //spi_flash_init();
     an41908a_spi_pin_init();
-	
+
+	FP_AD_pin_Init();
+
 }
 
 /*******************************************************************************
@@ -867,6 +884,8 @@ u8 key_zf_convert(void)
 	return 1;
 }
 
+
+#if 0
 u8 key_monitor(void)
 {
 	u16 key_tmp;
@@ -883,7 +902,53 @@ u8 key_monitor(void)
 	else
 		return 0;
 }
+#else
+u8 key_monitor(void)
+{
+	static u8 call201_202_mode = 0;;
+	u8 val;
+	u8 prePoint;
+	
+	val = GPIO_ReadInputDataBit(KEY_PORT,FP_AD_INPUT);
 
+	if(val == 0)
+	{	
+		delayms(20);
+		val = GPIO_ReadInputDataBit(KEY_PORT,FP_AD_INPUT);
+
+		if(call201_202_mode)
+		{
+			call201_202_mode = 0;
+		}
+		else
+		{
+			call201_202_mode = 1;
+		}
+		
+		if(call201_202_mode)
+		{
+			prePoint = 1;
+
+		}
+		else
+		{
+
+			prePoint = 2;
+
+		}
+
+
+		load_system_para_by_mode(prePoint);
+        camera_power_on_off(0);
+        delay_half_second(200);
+        camera_power_on_off(1);
+			
+	}
+
+	
+		return 0;
+}
+#endif
 
 #define		KEY_DEFAULT		0X1F00
 void keyscan(void)// ¼üÅÌÉ¨Ãèº¯Êý
@@ -2147,7 +2212,7 @@ int main(void)
 
 		//auto_focus_track_zoom();
 			
-        //key_monitor();
+        key_monitor();
 	}
 }
 

@@ -146,6 +146,7 @@ enum IRIS_TYPE
 #define	FOCUS_PIN_B1	GPIO_Pin_6
 #define	FOCUS_PIN_B2	GPIO_Pin_7
 
+#define	FP_AD_INPUT		GPIO_Pin_1
 
 #define	IRIS_PORT		GPIOB
 #define	IRIS_PIN_PLUS	GPIO_Pin_14
